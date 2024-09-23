@@ -69,7 +69,7 @@ function calculateOrderTotal(order){
     });
     return total;
 }
-const order={
+const orderForZed={
     customerName: "Zed",
     items: [
         {productName: "Matcha", quantity:3 },
@@ -78,5 +78,24 @@ const order={
     ],
     status: "Pending"
 };
-const totalPrice= calculateOrderTotal(order);
+    
+orders.push (orderForZed);
+
+const totalPrice= calculateOrderTotal(orderForZed);
 console.log (`The total order price is: ${totalPrice}`);
+
+
+function completeOrder (customerName) {
+    const order= orders.find (order=> order.customerName===customerName);
+
+    if (order){
+        order.status= "Completed";
+        console.log( `The order for ${customerName} has been completed.`);
+    } else{
+        console.log (`The order for ${customerName} was not found.`);
+    }
+}
+completeOrder ("Zed");
+completeOrder ("Sally");
+
+
