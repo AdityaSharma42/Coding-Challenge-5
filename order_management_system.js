@@ -25,7 +25,7 @@ orders.push(newOrders);
 console.log (orders);
 
 function placeOrder(customerName, items){
-    for (let item of items){
+    items.forEach(item=>{
         const product= inventory.find(product=> product.name===item.productName);
         if (!product){
             console.log (`"${item.productName}"does not exist.`);
@@ -36,11 +36,13 @@ function placeOrder(customerName, items){
             return;
         }
         
-    }
-    for  (let item of items){
+    });
+    items.forEach(item=>{
         const product= inventory.find(product=> product.name===item.productName);
+        if (product){
         product.quantity -= item.quantity;
     }
+});
     orders.push({
         customerName: customerName,
         items: items,
@@ -52,3 +54,29 @@ function placeOrder(customerName, items){
 placeOrder("Bret", [{productName: "Matcha", quantity:3}]);
 console.log(orders);
 console.log(inventory);
+
+function calculateOrderTotal(order){
+    let total =0;
+    order.items.forEach(item=>{
+        const product= inventory.find (product=>product.name===item.productName);
+        if (product){
+            total += product.price*item.quantity;
+
+        }else{
+            console.log (`"${item.productName}" does not exist.`);
+        
+        }
+    });
+    return total;
+}
+const order={
+    customerName: "Zed",
+    items: [
+        {productName: "Matcha", quantity:3 },
+        {productName: "Cheesecake", quantity:1 },
+
+    ],
+    status: "Pending"
+};
+const totalPrice= calculateOrderTotal(order);
+console.log (`The total order price is: ${totalPrice}`);
